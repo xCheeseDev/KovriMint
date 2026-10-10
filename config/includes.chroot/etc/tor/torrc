@@ -1,0 +1,8 @@
+# KovriMint default tor configuration
+SocksPort 9050
+ControlPort 9051
+CookieAuthentication 1
+CookieAuthFileGroupReadable 1
+DataDirectory /var/lib/tor
+# Avoid writing sensitive state to disk paths that could leak via persistence:
+AvoidDiskWrites 1

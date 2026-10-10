@@ -1,0 +1,38 @@
+# KovriMint v1 — package list (Debian trixie)
+# One package per line. Lines starting with # are comments.
+
+# --- Desktop (lightweight: keeps the ISO small and fast on USB) ---
+xfce4
+xfce4-terminal
+lightdm
+lightdm-gtk-greeter
+network-manager
+network-manager-gnome
+
+# --- Privacy networking ---
+tor
+torsocks
+torbrowser-launcher
+macchanger
+
+# --- Monero ---
+# NOTE: Debian's `monero` package (monerod + CLI wallet tools) can lag behind
+# upstream releases. For v1 it's fine for learning/testing; Feather Wallet
+# (installed by a hook, always current) is the recommended day-to-day wallet.
+monero
+keepassxc
+
+# --- Needed by scripts/setup-persistence.sh (LUKS encrypted persistence) ---
+cryptsetup
+parted
+
+# --- Wi-Fi / hardware firmware (non-free-firmware archive) ---
+firmware-iwlwifi
+firmware-realtek
+firmware-atheros
+
+# --- General utilities ---
+curl
+wget
+gnupg
+ca-certificates

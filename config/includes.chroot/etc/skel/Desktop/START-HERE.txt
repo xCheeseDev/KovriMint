@@ -1,0 +1,25 @@
+Welcome to KovriMint v1
+========================
+
+This is an amnesic live environment: everything you do disappears
+when you shut down — UNLESS you set up encrypted persistence.
+
+TO KEEP YOUR WALLET BETWEEN SESSIONS:
+  1. Open a terminal
+  2. Run:  sudo /usr/local/bin/kovrimint-setup-persistence
+     (the script lives in the repo at scripts/setup-persistence.sh;
+      copy it to a USB stick or type it out — see docs/PERSISTENCE.md)
+  3. Reboot. At the boot prompt you'll be asked for your LUKS passphrase.
+  4. Your /home (wallets, Feather data) now survives reboots, encrypted.
+
+INCLUDED TOOLS:
+  - Feather Wallet  (/opt/feather.AppImage, also in the app menu)
+  - Monero daemon + CLI tools  (monerod, monero-wallet-cli)
+  - Tor Browser  (app menu) and system Tor on port 9050
+  - KeePassXC  (password manager)
+
+READ THIS BEFORE TRUSTING IT WITH REAL MONEY:
+  docs/SECURITY.md in the repo — v1 is a personal/experimental build,
+  not an audited product.
+
+https://github.com/xCheeseDev/KovriMint

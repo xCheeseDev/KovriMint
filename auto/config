@@ -1,0 +1,21 @@
+#!/bin/sh
+# KovriMint live-build configuration — Debian trixie (stable)
+# Run from the repo root as root:  sudo ./scripts/build.sh
+set -e
+
+lb config noauto \
+    --mode debian \
+    --distribution trixie \
+    --archive-areas "main contrib non-free non-free-firmware" \
+    --debian-installer false \
+    --debian-installer-gui false \
+    --win32-loader false \
+    --memtest none \
+    --binary-images iso-hybrid \
+    --bootloaders "syslinux,grub-efi" \
+    --iso-application "KovriMint" \
+    --iso-preparer "KovriMint Project" \
+    --iso-publisher "https://github.com/xCheeseDev/KovriMint" \
+    --iso-volume "KovriMint v1" \
+    --bootappend-live "boot=live components persistence persistence-encryption=luks quiet" \
+    "${@}"

@@ -1,0 +1,56 @@
+#!/bin/sh
+# Install Feather Wallet (AppImage) with PGP signature verification.
+# Runs inside the chroot during the build. Network access is required.
+# If the download fails, the build continues WITHOUT Feather (warning only).
+set -e
+
+FEATHER_VERSION="2.8.1"   # <-- bump this to update Feather
+BASE="https://featherwallet.org/files/releases/linux-appimage"
+APPIMAGE="feather-${FEATHER_VERSION}.AppImage"
+# Official Feather release signing key fingerprint (docs.featherwallet.org):
+KEY_FPR="8185E158A33330C7FD61BC0D1F76E155CEFBA71C"
+KEY_URL="https://raw.githubusercontent.com/feather-wallet/feather/master/utils/pubkeys/featherwallet.asc"
+
+TMP="$(mktemp -d)"
+export GNUPGHOME="$TMP/gnupg"
+mkdir -p "$GNUPGHOME"
+chmod 700 "$GNUPGHOME"
+
+cleanup() { rm -rf "$TMP"; }
+trap cleanup EXIT
+
+echo ">>> KovriMint: fetching Feather Wallet ${FEATHER_VERSION} ..."
+if ! curl -fsSL -o "$TMP/feather.AppImage"     "$BASE/$APPIMAGE" || \
+   ! curl -fsSL -o "$TMP/feather.AppImage.asc" "$BASE/$APPIMAGE.asc" || \
+   ! curl -fsSL -o "$TMP/featherwallet.asc"    "$KEY_URL"; then
+    echo ">>> WARNING: Feather download failed — continuing without it."
+    exit 0
+fi
+
+gpg --batch --import "$TMP/featherwallet.asc"
+GOT_FPR="$(gpg --batch --with-colons --list-keys dev@featherwallet.org \
+           | awk -F: '/^fpr:/ {print $10; exit}')"
+if [ "$GOT_FPR" != "$KEY_FPR" ]; then
+    echo ">>> WARNING: Feather signing key fingerprint mismatch — skipping install."
+    exit 0
+fi
+
+if ! gpg --batch --verify "$TMP/feather.AppImage.asc" "$TMP/feather.AppImage"; then
+    echo ">>> WARNING: Feather signature invalid — skipping install."
+    exit 0
+fi
+
+install -m 0755 "$TMP/feather.AppImage" /opt/feather.AppImage
+
+cat > /usr/share/applications/feather.desktop <<'EOF'
+[Desktop Entry]
+Name=Feather Wallet
+Comment=Monero desktop wallet
+Exec=/opt/feather.AppImage
+Icon=feather
+Terminal=false
+Type=Application
+Categories=Finance;Network;
+EOF
+
+echo ">>> KovriMint: Feather Wallet ${FEATHER_VERSION} installed and verified."

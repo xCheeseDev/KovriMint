@@ -1,0 +1,6 @@
+#!/bin/sh
+# Enable the Tor daemon at boot. Config itself lives in
+# config/includes.chroot/etc/tor/torrc
+set -e
+
+systemctl enable tor

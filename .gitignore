@@ -1,0 +1,12 @@
+# live-build artifacts
+cache/
+chroot/
+binary/
+stagefiles/
+*.iso
+*.iso.sha256
+*.log
+.config/
+# editor junk
+.DS_Store
+*~
