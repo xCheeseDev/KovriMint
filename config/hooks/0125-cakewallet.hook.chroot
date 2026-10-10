@@ -1,0 +1,58 @@
+#!/bin/sh
+# Install Cake Wallet (Linux tarball) with SHA256 verification.
+# Runs inside the chroot during the build. Network access is required.
+# If the download fails, the build continues WITHOUT Cake Wallet (warning only).
+set -e
+
+CAKE_VERSION="6.4.4"   # <-- bump this to update Cake Wallet
+TARBALL="Cake_Wallet_v${CAKE_VERSION}_Linux.tar.xz"
+URL="https://github.com/cake-tech/cake_wallet/releases/download/v${CAKE_VERSION}/${TARBALL}"
+# SHA256 published in the upstream release notes for v6.4.4:
+SHA256="c24310b8f0a111580e59f38b48cfd40f66c6e4353d7629bee38b049e56b91025"
+
+TMP="$(mktemp -d)"
+cleanup() { rm -rf "$TMP"; }
+trap cleanup EXIT
+
+echo ">>> KovriMint: fetching Cake Wallet ${CAKE_VERSION} ..."
+if ! curl -fsSL -o "$TMP/cake.tar.xz" "$URL"; then
+    echo ">>> WARNING: Cake Wallet download failed — continuing without it."
+    exit 0
+fi
+
+GOT="$(sha256sum "$TMP/cake.tar.xz" | awk '{print $1}')"
+if [ "$GOT" != "$SHA256" ]; then
+    echo ">>> WARNING: Cake Wallet checksum mismatch — skipping install."
+    echo ">>> expected: $SHA256"
+    echo ">>> got:      $GOT"
+    exit 0
+fi
+
+rm -rf /opt/cake-wallet
+mkdir -p /opt/cake-wallet
+tar -xJf "$TMP/cake.tar.xz" -C /opt/cake-wallet --strip-components=1 2>/dev/null || \
+    tar -xJf "$TMP/cake.tar.xz" -C /opt/cake-wallet
+
+# Find the main executable (layout varies between releases)
+BIN="$(find /opt/cake-wallet -maxdepth 2 -type f -name '*cake*' -executable | head -n1)"
+if [ -z "$BIN" ]; then
+    BIN="$(find /opt/cake-wallet -maxdepth 2 -type f -executable | head -n1)"
+fi
+if [ -z "$BIN" ]; then
+    echo ">>> WARNING: could not locate Cake Wallet binary — skipping launcher."
+    exit 0
+fi
+chmod +x "$BIN"
+ln -sf "$BIN" /usr/local/bin/cake-wallet
+
+cat > /usr/share/applications/cake-wallet.desktop <<EOF
+[Desktop Entry]
+Name=Cake Wallet
+Comment=Multi-currency crypto wallet (Monero, Bitcoin, and more)
+Exec=$BIN
+Terminal=false
+Type=Application
+Categories=Finance;Network;
+EOF
+
+echo ">>> KovriMint: Cake Wallet ${CAKE_VERSION} installed and verified."

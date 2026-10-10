@@ -14,6 +14,7 @@ TO KEEP YOUR WALLET BETWEEN SESSIONS:
 
 INCLUDED TOOLS:
   - Feather Wallet  (/opt/feather.AppImage, also in the app menu)
+  - Cake Wallet  (multi-currency: XMR, BTC, and more, in the app menu)
   - Monero daemon + CLI tools  (monerod, monero-wallet-cli)
   - Tor Browser  (app menu) and system Tor on port 9050
   - KeePassXC  (password manager)

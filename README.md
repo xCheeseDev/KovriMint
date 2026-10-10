@@ -13,8 +13,9 @@ Built on **Debian 13 ("trixie")** with `live-build`.
 ## What's inside v1
 
 - **XFCE desktop** — lightweight, fast off USB
-- **Feather Wallet** (PGP-verified AppImage, always current) + Debian's
-  `monero` CLI tools (`monerod`, `monero-wallet-cli`)
+- **Feather Wallet** (PGP-verified AppImage, always current) + **Cake Wallet**
+  (SHA256-verified Linux build, multi-currency) + Debian's `monero` CLI tools
+  (`monerod`, `monero-wallet-cli`)
 - **Tor** daemon + Tor Browser, MAC address randomization, kernel hardening
 - **Encrypted persistence (opt-in):** LUKS2 partition keeps `/home` (wallets),
   Tor state, and Wi-Fi profiles between boots; everything else stays amnesic
@@ -39,7 +40,7 @@ Where this is going: [docs/ROADMAP.md](docs/ROADMAP.md)
 auto/config                  # live-build configuration (Debian trixie, ISO settings)
 config/
   package-lists/kovrimint.list   # every package baked into the ISO
-  hooks/                         # build-time scripts (branding, Tor, Feather install)
+  hooks/                         # build-time scripts (branding, Tor, wallet installs)
   includes.chroot/               # files copied into the live system (torrc, hardening…)
 scripts/
   build.sh                   # one-command ISO builder (run as root)
