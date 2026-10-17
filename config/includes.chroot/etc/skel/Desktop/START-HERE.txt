@@ -17,6 +17,7 @@ INCLUDED TOOLS:
   - Cake Wallet  (multi-currency: XMR, BTC, and more, in the app menu)
   - Monero daemon + CLI tools  (monerod, monero-wallet-cli)
   - Tor Browser  (app menu) and system Tor on port 9050
+  - Brave Browser  (stable, in the app menu) — clearnet browsing
   - KeePassXC  (password manager)
 
 READ THIS BEFORE TRUSTING IT WITH REAL MONEY:

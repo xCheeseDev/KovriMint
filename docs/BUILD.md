@@ -62,6 +62,9 @@ the fix goes in `config/` — see the repo layout in the README.
 - **Build fails downloading Feather:** the hook warns and continues without
   it — you'll get an ISO without Feather. Re-run when network is fine, or
   bump `FEATHER_VERSION` in `config/hooks/0120-feather.hook.chroot`.
+- **Build fails downloading Cake Wallet or Brave:** same pattern — the
+  `0125-cakewallet` and `0128-brave` hooks warn and continue without them.
+  Re-run when network is fine.
 - **`lb: command not found`:** the build script installs it; if you're calling
   `lb` manually, `sudo apt install live-build`.
 - **Out of space:** `lb clean --purge` wipes the build tree (`cache/`,

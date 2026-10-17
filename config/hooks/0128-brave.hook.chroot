@@ -1,0 +1,35 @@
+#!/bin/sh
+# Install Brave Browser (stable) from Brave's official APT repository.
+# Runs inside the chroot during the build. Network access is required.
+# If the download/install fails, the build continues WITHOUT Brave (warning only).
+# Numbered 0128 so it runs before the 0130 cleanup hook.
+set -e
+
+KEYRING="/usr/share/keyrings/brave-browser-archive-keyring.gpg"
+KEY_URL="https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg"
+SOURCES="/etc/apt/sources.list.d/brave-browser-release.list"
+
+echo ">>> KovriMint: installing Brave Browser (stable) ..."
+
+if ! curl -fsSL -o "$KEYRING" "$KEY_URL"; then
+    echo ">>> WARNING: Brave keyring download failed — continuing without Brave."
+    exit 0
+fi
+chmod 0644 "$KEYRING"
+
+echo "deb [signed-by=$KEYRING arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" > "$SOURCES"
+
+if ! apt-get update -qq; then
+    echo ">>> WARNING: apt update failed after adding Brave repo — removing it and continuing."
+    rm -f "$SOURCES" "$KEYRING"
+    exit 0
+fi
+
+if ! DEBIAN_FRONTEND=noninteractive apt-get install -y -qq brave-browser; then
+    echo ">>> WARNING: Brave install failed — removing repo and continuing without it."
+    rm -f "$SOURCES" "$KEYRING"
+    apt-get update -qq || true
+    exit 0
+fi
+
+echo ">>> KovriMint: Brave Browser (stable) installed."

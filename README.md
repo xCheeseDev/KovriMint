@@ -16,6 +16,8 @@ Built on **Debian 13 ("trixie")** with `live-build`.
 - **Feather Wallet** (PGP-verified AppImage, always current) + **Cake Wallet**
   (SHA256-verified Linux build, multi-currency) + Debian's `monero` CLI tools
   (`monerod`, `monero-wallet-cli`)
+- **Brave Browser (stable)** from Brave's official APT repo — the clearnet
+  browser next to Tor Browser, with built-in ad/tracker blocking
 - **Tor** daemon + Tor Browser, MAC address randomization, kernel hardening
 - **Encrypted persistence (opt-in):** LUKS2 partition keeps `/home` (wallets),
   Tor state, and Wi-Fi profiles between boots; everything else stays amnesic
