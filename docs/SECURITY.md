@@ -28,6 +28,9 @@
   Feather Wallet (PGP-verified in the build) is the recommended wallet for v1.
 - **User error:** phishing, clipboard hijackers on the *websites* you visit,
   and weak passphrases are still on you.
+- **Torrenting over Tor:** qBittorrent is included for clearnet downloads
+  only. Torrent traffic over Tor can leak your real IP and abuses the
+  network — never route it through Tor.
 
 ## Recommendations
 

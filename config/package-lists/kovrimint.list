@@ -22,6 +22,11 @@ macchanger
 monero
 keepassxc
 
+# --- Downloads ---
+# NOTE: qBittorrent is for CLEARNET use only. Never run torrent traffic over
+# Tor — it can deanonymize you and hammers the Tor network. See SECURITY.md.
+qbittorrent
+
 # --- Needed by scripts/setup-persistence.sh (LUKS encrypted persistence) ---
 cryptsetup
 parted

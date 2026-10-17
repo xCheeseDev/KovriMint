@@ -18,6 +18,7 @@ INCLUDED TOOLS:
   - Monero daemon + CLI tools  (monerod, monero-wallet-cli)
   - Tor Browser  (app menu) and system Tor on port 9050
   - Brave Browser  (stable, in the app menu) — clearnet browsing
+  - qBittorrent  (clearnet downloads ONLY — never run it over Tor)
   - KeePassXC  (password manager)
 
 READ THIS BEFORE TRUSTING IT WITH REAL MONEY:

@@ -18,6 +18,7 @@ Built on **Debian 13 ("trixie")** with `live-build`.
   (`monerod`, `monero-wallet-cli`)
 - **Brave Browser (stable)** from Brave's official APT repo — the clearnet
   browser next to Tor Browser, with built-in ad/tracker blocking
+- **qBittorrent** — clearnet downloads (never over Tor, see SECURITY.md)
 - **Tor** daemon + Tor Browser, MAC address randomization, kernel hardening
 - **Encrypted persistence (opt-in):** LUKS2 partition keeps `/home` (wallets),
   Tor state, and Wi-Fi profiles between boots; everything else stays amnesic
